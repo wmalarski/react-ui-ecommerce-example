@@ -2,7 +2,7 @@ import { calculateSkip } from "@/helpers/calculate-skip";
 import { jsonFetcher } from "./fetcher";
 import { Products } from "./types";
 
-const DEFAULT_LIMIT = 10;
+export const PRODUCTS_DEFAULT_LIMIT = 10;
 const FIRST_PAGE = 1;
 
 type GetProductsArgs = {
@@ -11,7 +11,7 @@ type GetProductsArgs = {
 };
 
 export const getProducts = async ({
-  limit = DEFAULT_LIMIT,
+  limit = PRODUCTS_DEFAULT_LIMIT,
   page = FIRST_PAGE,
 }: GetProductsArgs) => {
   return jsonFetcher<Products>({
@@ -27,7 +27,7 @@ type GetProductsWithQueryArgs = {
 };
 
 export const getProductsWithQuery = async ({
-  limit = DEFAULT_LIMIT,
+  limit = PRODUCTS_DEFAULT_LIMIT,
   page = FIRST_PAGE,
   query,
 }: GetProductsWithQueryArgs) => {

@@ -3,15 +3,15 @@ import { useState, type ChangeEvent } from "react";
 
 const THROTTLE_TIME = 500;
 
-type TypeaheadProps = {
-  initialQuery: string;
+type TypeAheadProps = {
+  initialQuery?: string;
   onQueryChange: (query: string) => void;
 };
 
-export default function Typeahead({
+export default function TypeAhead({
   initialQuery,
   onQueryChange,
-}: TypeaheadProps) {
+}: TypeAheadProps) {
   const [value, setValue] = useState(initialQuery);
 
   const throttledOnChange = useThrottle(onQueryChange, THROTTLE_TIME);

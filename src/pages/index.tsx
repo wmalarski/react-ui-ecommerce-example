@@ -1,73 +1,70 @@
 import Pagination from "@/components/Pagination/Pagination";
-import Typeahead from "@/components/Typeahead/Typeahead";
+import TypeAhead from "@/components/Typeahead/Typeahead";
 import { getPaginationControls } from "@/helpers";
-import { getProducts, getProductsWithQuery } from "@/services/products";
-import { Products } from "@/services/types";
+import {
+  PRODUCTS_DEFAULT_LIMIT,
+  getProducts,
+  getProductsWithQuery,
+} from "@/services/products";
 import styles from "@/styles/Home.module.css";
-import { Product } from "@/types";
+import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useCallback, useState } from "react";
-import { getServerSideProps } from "./products/[id]";
+import {
+  Output,
+  coerce,
+  number,
+  object,
+  optional,
+  safeParseAsync,
+  string,
+} from "valibot";
 
-type HomeProps = {};
+const getQuerySchema = () => {
+  return object({
+    page: optional(coerce(number(), Number), 1),
+    query: optional(string(), ""),
+  });
+};
 
-export default function Page(props: HomeProps) {
+const getProps = async ({
+  page,
+  query,
+}: Output<ReturnType<typeof getQuerySchema>>) => {
+  if (query.length > 0) {
+    const data = await getProductsWithQuery({ page, query });
+    return { data, page, query };
+  }
+
+  const data = await getProducts({ page });
+  return { data, page, query };
+};
+
+type PageProps = Awaited<ReturnType<typeof getProps>>;
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async (
+  context,
+) => {
+  const query = await safeParseAsync(getQuerySchema(), context.query);
+
+  if (!query.success) {
+    return { notFound: true };
+  }
+
+  return { props: await getProps(query.output) };
+};
+
+export default function Page({ data, page, query }: PageProps) {
   const router = useRouter();
 
-  const [productData, setProductData] = useState<Product[]>([]);
-
-  const [pagination, setPagination] = useState<{
-    pageStart: number;
-    pageEnd: number;
-  }>(undefined);
-
-  console.log("router.query", router.query);
-
-  const [query, setQuery] = useState("");
-  const [page, setPage] = useState<number>(1);
-
-  const [total, setTotal] = useState<number>(0);
-
-  const updateData = useCallback(
-    (data: Products) => {
-      console.log({ data });
-      const paginationControls = getPaginationControls(10, page, data.total);
-      setTotal(data.total);
-      setPagination(paginationControls);
-      setProductData(data.products);
-    },
-    [page]
+  const pagination = getPaginationControls(
+    PRODUCTS_DEFAULT_LIMIT,
+    page,
+    data.total,
   );
 
-  React.useEffect(() => {
-    let path;
-    let page: number;
-
-    if (typeof window !== "undefined") {
-      path = new URLSearchParams(window?.location.search);
-      page = +(path.get("page") ?? 1);
-    } else {
-      page = 1;
-    }
-
-    setPage(page);
-
-    if (query) {
-      getProductsWithQuery({ query }).then(updateData);
-      return;
-    }
-    getProducts({ page }).then(updateData);
-  }, [router.asPath, query, updateData]);
-
-  React.useEffect(() => {}, [page, updateData]);
-
   const onQueryChange = async (value: string) => {
-    setQuery(value);
-
-    router.replace({ query: { query: value, page } }, undefined, {
-      shallow: true,
-    });
+    router.replace({ query: { query: value } });
   };
 
   return (
@@ -78,12 +75,12 @@ export default function Page(props: HomeProps) {
             <h1>Shop Products</h1>
           </div>
           <div className={styles.wrapper_Container}>
-            <Typeahead initialQuery={query} onQueryChange={onQueryChange} />
+            <TypeAhead initialQuery={query} onQueryChange={onQueryChange} />
           </div>
           <div style={{ margin: "5rem 0" }} className={styles.productList}>
-            {productData &&
-              productData.length > 0 &&
-              productData.map((data: any) => (
+            {data &&
+              data.products.length > 0 &&
+              data.products.map((data: any) => (
                 <a
                   href={`/products/${data.id}`}
                   className={styles.CardComponent}
@@ -106,7 +103,7 @@ export default function Page(props: HomeProps) {
           {pagination && (
             <Pagination
               page={page}
-              recordTotal={total}
+              recordTotal={data.total}
               recordStart={pagination.pageStart}
               recordEnd={pagination.pageEnd}
             />
@@ -116,5 +113,3 @@ export default function Page(props: HomeProps) {
     </>
   );
 }
-
-export cosnst getServerSideProps
