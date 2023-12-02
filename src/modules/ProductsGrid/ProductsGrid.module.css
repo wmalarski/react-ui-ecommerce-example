@@ -1,8 +1,13 @@
-.wrapper_Container {
+.root {
+  display: "flex";
+  flex-flow: "column wrap";
+}
+
+.wrapperContainer {
   margin: 0 auto;
 }
 
-.CardComponent {
+.cardComponent {
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 0.5rem;
@@ -14,11 +19,11 @@
   margin: 1rem;
 }
 
-.CardComponent:nth-child(3n + 1) {
+.cardComponent:nth-child(3n + 1) {
   clear: both;
 }
 
-.CardComponent:hover {
+.cardComponent:hover {
   scale: 1.03;
 }
 
@@ -29,8 +34,12 @@
   margin: 0 auto;
 }
 
-.CardComponent img {
+.cardComponent img {
   object-fit: contain;
+}
+
+.productList {
+  margin: "5rem 0";
 }
 
 @media (max-width: 767px) {

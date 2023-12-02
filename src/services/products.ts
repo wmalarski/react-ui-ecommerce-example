@@ -1,4 +1,4 @@
-import { calculateSkip } from "@/helpers/calculate-skip";
+import { calculateSkip } from "@/services/calculate-skip";
 import { jsonFetcher } from "./fetcher";
 import { Product, Products } from "./types";
 

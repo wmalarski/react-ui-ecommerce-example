@@ -16,7 +16,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
       <div className={styles.detail}>
         <h1>{product.title}</h1>
         <p>{product.description}</p>
-        <h5>{formatPrice(product.price)}</h5>
+        <strong>{formatPrice(product.price)}</strong>
       </div>
     </section>
   );

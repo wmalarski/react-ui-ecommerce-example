@@ -1,13 +1,13 @@
 import { Pagination } from "@/components/Pagination/Pagination";
+import { getPaginationControls } from "@/components/Pagination/Pagination.utils";
 import { TypeAhead } from "@/components/TypeAhead/TypeAhead";
-import { getPaginationControls } from "@/helpers";
 import { paths } from "@/helpers/paths";
 import { PRODUCTS_DEFAULT_LIMIT } from "@/services/products";
 import { Product, Products } from "@/services/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styles from "./Home.module.css";
+import styles from "./ProductsGrid.module.css";
 
 type ProductGridItemProps = {
   product: Product;
@@ -17,7 +17,7 @@ const ProductGridItem = ({ product }: ProductGridItemProps) => {
   return (
     <Link
       href={paths.productDetails(product.id)}
-      className={styles.CardComponent}
+      className={styles.cardComponent}
     >
       <div className={styles.cardImage}>
         <Image
@@ -35,11 +35,11 @@ const ProductGridItem = ({ product }: ProductGridItemProps) => {
 
 type HomeProps = {
   data: Products;
-  query: string;
+  initialQuery: string;
   page: number;
 };
 
-export const Home = ({ data, page, query }: HomeProps) => {
+export const ProductsGrid = ({ data, page, initialQuery }: HomeProps) => {
   const router = useRouter();
 
   const pagination = getPaginationControls(
@@ -53,18 +53,18 @@ export const Home = ({ data, page, query }: HomeProps) => {
       router.replace(paths.home({ query }));
       return;
     }
-    router.replace(paths.home({}));
+    router.replace(paths.home());
   };
 
   return (
-    <section style={{ display: "flex", flexFlow: "column wrap" }}>
+    <section className={styles.root}>
       <header>
         <h1>Shop Products</h1>
       </header>
-      <div className={styles.wrapper_Container}>
-        <TypeAhead initialQuery={query} onQueryChange={onQueryChange} />
+      <div className={styles.wrapperContainer}>
+        <TypeAhead initialQuery={initialQuery} onQueryChange={onQueryChange} />
       </div>
-      <div style={{ margin: "5rem 0" }} className={styles.productList}>
+      <div className={styles.productList}>
         {data &&
           data.products.length > 0 &&
           data.products.map((data) => (

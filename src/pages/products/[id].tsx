@@ -3,7 +3,6 @@ import { ProductDetails } from "@/modules/ProductDetails/ProductDetails";
 import { getProduct } from "@/services/products";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import {
   Output,
   coerce,
@@ -43,8 +42,6 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (
 };
 
 export default function ProductPage({ product }: ProductPageProps) {
-  const router = useRouter();
-
   if (!product) {
     return (
       <div>Oops! It looks like we had some trouble rendering this data.</div>
@@ -52,11 +49,11 @@ export default function ProductPage({ product }: ProductPageProps) {
   }
 
   return (
-    <div>
-      <Link href={paths.home({})}>
+    <main>
+      <Link href={paths.home()}>
         <span>Go Back</span>
       </Link>
       <ProductDetails product={product} />;
-    </div>
+    </main>
   );
 }

@@ -1,5 +1,4 @@
 import { useRef } from "react";
-
 import { useEvent } from "./use-event";
 
 export const useThrottle = <T extends (...args: any[]) => void>(

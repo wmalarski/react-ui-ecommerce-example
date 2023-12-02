@@ -1,4 +1,4 @@
-import { Home } from "@/modules/Home/Home";
+import { ProductsGrid } from "@/modules/ProductsGrid/ProductsGrid";
 import { getProducts, getProductsWithQuery } from "@/services/products";
 import { GetServerSideProps } from "next";
 import {
@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 export default function Page({ data, page, query }: PageProps) {
   return (
     <main>
-      <Home data={data} page={page} query={query} />
+      <ProductsGrid data={data} page={page} initialQuery={query} />
     </main>
   );
 }
