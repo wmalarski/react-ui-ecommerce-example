@@ -1,6 +1,6 @@
 import { calculateSkip } from "@/helpers/calculate-skip";
 import { jsonFetcher } from "./fetcher";
-import { Products } from "./types";
+import { Product, Products } from "./types";
 
 export const PRODUCTS_DEFAULT_LIMIT = 10;
 const FIRST_PAGE = 1;
@@ -34,5 +34,15 @@ export const getProductsWithQuery = async ({
   return jsonFetcher<Products>({
     path: "/products/search",
     query: { q: query, limit, skip: calculateSkip(limit, page) },
+  });
+};
+
+type GetProduct = {
+  id: string;
+};
+
+export const getProduct = async ({ id }: GetProduct) => {
+  return jsonFetcher<Product>({
+    path: `/products/${id}`,
   });
 };

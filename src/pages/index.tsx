@@ -42,7 +42,12 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
     return { notFound: true };
   }
 
-  return { props: await getProps(query.output) };
+  try {
+    const props = await getProps(query.output);
+    return { props };
+  } catch {
+    return { notFound: true };
+  }
 };
 
 export default function Page({ data, page, query }: PageProps) {

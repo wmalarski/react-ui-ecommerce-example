@@ -1,56 +1,56 @@
-import styles from "./[id].module.css";
-import { Product } from "@/types";
-import Image from "next/image";
+import { ProductDetails } from "@/modules/ProductDetails/ProductDetails";
+import { getProduct } from "@/services/products";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { Output, object, safeParseAsync, string } from "valibot";
 
-type ProductDetailProps = {
-  product?: Product;
+const getParamsSchema = () => {
+  return object({ id: string() });
 };
-export default function ProductpageComponent({ product }: ProductDetailProps) {
-  const [localProductData, setLocalProductData] = React.useState(product);
 
-  useEffect(() => {
-    setLocalProductData(product);
-  }, [product]);
+const getProps = async ({ id }: Output<ReturnType<typeof getParamsSchema>>) => {
+  const product = await getProduct({ id });
+  return { product };
+};
 
+type ProductPageProps = Awaited<ReturnType<typeof getProps>>;
+
+export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (
+  context,
+) => {
+  const query = await safeParseAsync(getParamsSchema(), context.params);
+
+  if (!query.success) {
+    return { notFound: true };
+  }
+
+  try {
+    const props = await getProps(query.output);
+    return { props };
+  } catch {
+    return { notFound: true };
+  }
+};
+
+export default function ProductPage({ product }: ProductPageProps) {
   const router = useRouter();
-  if (!localProductData)
+
+  if (!product) {
     return (
       <div>Oops! It looks like we had some trouble rendering this data.</div>
     );
+  }
+
+  const onBackClick = () => {
+    router.back();
+  };
 
   return (
     <div>
-      <a onClick={() => (window.location.href = "/")}>
+      <a onClick={onBackClick}>
         <span>Go Back</span>
       </a>
-      <section className={styles.card}>
-        <div className={styles.image}>
-          <Image
-            src={localProductData?.thumbnail}
-            alt={localProductData?.description}
-            fill
-          />
-        </div>
-        <div className={styles.detail}>
-          <h1>{localProductData?.title}</h1>
-          <p>{localProductData?.description}</p>
-          <h5>${localProductData?.price.toFixed(2)}</h5>
-        </div>
-      </section>
+      <ProductDetails product={product} />;
     </div>
   );
 }
-
-export const getServerSideProps = async (context) => {
-  if (!+context.params?.id) return { props: {} };
-
-  const response = await fetch(
-    `https://dummyjson.com/products/${context.params?.id}`,
-  );
-
-  return await response.json().then((product) => {
-    return { props: { product: product } };
-  });
-};
