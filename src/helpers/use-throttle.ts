@@ -1,10 +1,10 @@
 import { useRef } from "react";
 
-import { useEvent } from "./useEvent";
+import { useEvent } from "./use-event";
 
 export const useThrottle = <T extends (...args: any[]) => any>(
   callback: T,
-  delay: number
+  delay: number,
 ): T => {
   const callbackRef = useEvent(callback);
 

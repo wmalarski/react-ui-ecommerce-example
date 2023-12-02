@@ -1,8 +1,5 @@
-import { useThrottle } from "@/helpers/useThrottle";
-import styles from "./Pagination.module.css";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState, type ChangeEvent, useEffect } from "react";
+import { useThrottle } from "@/helpers/use-throttle";
+import { useState, type ChangeEvent } from "react";
 
 const THROTTLE_TIME = 500;
 

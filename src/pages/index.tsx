@@ -1,13 +1,13 @@
-import styles from "@/styles/Home.module.css";
-import Image from "next/image";
 import Pagination from "@/components/Pagination/Pagination";
-import { getPaginationControls } from "@/helpers";
-import React, { useCallback, useState } from "react";
-import { useRouter } from "next/router";
 import Typeahead from "@/components/Typeahead/Typeahead";
-import { getProducts, getProductsWithQuery } from "@/services/api/products";
+import { getPaginationControls } from "@/helpers";
+import { getProducts, getProductsWithQuery } from "@/services/products";
+import { Products } from "@/services/types";
+import styles from "@/styles/Home.module.css";
 import { Product } from "@/types";
-import { Products } from "@/services/api/types";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import React, { useCallback, useState } from "react";
 import { getServerSideProps } from "./products/[id]";
 
 type HomeProps = {};
