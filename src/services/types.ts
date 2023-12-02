@@ -1,20 +1,23 @@
 export type Product = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
   brand: string;
   category: string;
-  thumbnail: string;
+  description: string;
+  discountPercentage: number;
+  id: number;
   images: string[];
+  price: number;
+  rating: number;
+  stock: number;
+  thumbnail: string;
+  title: string;
 };
 
-export type Products = {
-  products: Product[];
-  total: number;
-  skip: number;
+export type ListMeta = {
   limit: number;
+  skip: number;
+  total: number;
+};
+
+export type Products = ListMeta & {
+  products: Product[];
 };

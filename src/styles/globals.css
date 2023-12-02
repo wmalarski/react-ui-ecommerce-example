@@ -18,20 +18,10 @@
   --space-80: 20rem;
   --space-100: 25rem;
 
+  --container-xl: 1280px;
+
   --font-size-lg: 1.1rem;
   --font-size-2xl: 1.5rem;
 
   --font-weight-bold: 700;
-}
-
-
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-@media (max-width: 767px) {
-  .container {
-    padding: 0 3rem;
-  }
 }

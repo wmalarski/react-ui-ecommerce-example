@@ -1,4 +1,6 @@
+import { paths } from "@/helpers/paths";
 import { useThrottle } from "@/helpers/use-throttle";
+import { useRouter } from "next/router";
 import type { FormEvent } from "react";
 
 const THROTTLE_TIME = 500;
@@ -10,11 +12,16 @@ const getQueryValue = (form: HTMLFormElement) => {
 };
 
 type TypeAheadProps = {
-  initialQuery?: string;
-  onQueryChange: (query: string) => void;
+  defaultValue?: string;
 };
 
-export const TypeAhead = ({ initialQuery, onQueryChange }: TypeAheadProps) => {
+export function TypeAhead({ defaultValue }: TypeAheadProps) {
+  const router = useRouter();
+
+  const onQueryChange = (query: string) => {
+    router.replace(paths.home(query.length > 0 ? { query } : {}));
+  };
+
   const throttledOnChange = useThrottle(onQueryChange, THROTTLE_TIME);
 
   const onChange = (event: FormEvent<HTMLFormElement>) => {
@@ -31,11 +38,11 @@ export const TypeAhead = ({ initialQuery, onQueryChange }: TypeAheadProps) => {
       <label>
         Search
         <input
-          defaultValue={initialQuery}
+          defaultValue={defaultValue}
           name={SEARCH_FIELD_NAME}
           type="search"
         />
       </label>
     </form>
   );
-};
+}

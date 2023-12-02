@@ -1,4 +1,4 @@
-import { UrlObject } from "node:url";
+import type { UrlObject } from "node:url";
 import { buildSearchParams } from "./search-params";
 
 export const paths = {

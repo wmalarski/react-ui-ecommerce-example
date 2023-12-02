@@ -3,18 +3,13 @@ import { useRouter } from "next/router";
 import styles from "./Pagination.module.css";
 
 type PaginationProps = {
+  end: number;
   page: number;
-  recordTotal: number;
-  recordStart: number;
-  recordEnd: number;
+  start: number;
+  total: number;
 };
 
-export const Pagination = ({
-  page,
-  recordTotal,
-  recordStart,
-  recordEnd,
-}: PaginationProps) => {
+export function Pagination({ page, total, start, end }: PaginationProps) {
   const { query } = useRouter();
 
   return (
@@ -27,7 +22,7 @@ export const Pagination = ({
             </Link>
           </div>
         ) : null}
-        {recordTotal > recordEnd ? (
+        {total > end ? (
           <div>
             <Link href={{ query: { ...query, page: page + 1 } }}>
               Next Page &raquo;
@@ -36,8 +31,8 @@ export const Pagination = ({
         ) : null}
       </div>
       <div className={styles.info}>
-        Showing {recordStart}-{recordEnd} of {recordTotal}
+        Showing {start}-{end} of {total}
       </div>
     </div>
   );
-};
+}

@@ -10,3 +10,15 @@
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-2xl);
 }
+
+.container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-12);
+}
+
+@media (min-width: 767px) {
+  .container {
+    padding: unset;
+  }
+}

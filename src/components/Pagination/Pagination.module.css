@@ -1,9 +1,11 @@
 .pagination {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
   align-items: center;
   margin-top: var(--space-8);
-  padding: var(--space-2);
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .nav {
@@ -20,14 +22,17 @@
   font-weight: var(--font-weight-bold);
 }
 
-@media (max-width: 549px) {
+.info {
+  margin-bottom: var(--space-4);
+}
+
+@media (min-width: 549px) {
   .pagination {
-    flex-direction: column-reverse;
-    padding-left: 0;
-    padding-right: 0;
+    flex-direction: unset;
+    padding: var(--space-2);
   }
 
   .info {
-    margin-bottom: var(--space-4);
+    margin-bottom: unset;
   }
 }

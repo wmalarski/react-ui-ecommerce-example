@@ -1,8 +1,14 @@
-export const getPaginationControls = (
-  pageSize: number,
-  currentPage: number,
-  totalCount: number,
-) => {
+type GetPaginationControlsArgs = {
+  currentPage: number;
+  pageSize: number;
+  totalCount: number;
+};
+
+export const getPaginationControls = ({
+  pageSize,
+  currentPage,
+  totalCount,
+}: GetPaginationControlsArgs) => {
   if (!totalCount) {
     return { pageStart: 0, pageEnd: 0 };
   }

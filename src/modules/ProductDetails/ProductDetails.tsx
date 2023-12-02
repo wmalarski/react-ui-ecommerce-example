@@ -1,5 +1,5 @@
 import { formatPrice } from "@/components/utils/format";
-import { Product } from "@/services/types";
+import type { Product } from "@/services/types";
 import Image from "next/image";
 import styles from "./ProductDetails.module.css";
 
@@ -7,7 +7,7 @@ type ProductDetailsProps = {
   product: Product;
 };
 
-export const ProductDetails = ({ product }: ProductDetailsProps) => {
+export function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <section className={styles.card}>
       <div className={styles.image}>
@@ -20,4 +20,4 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
       </div>
     </section>
   );
-};
+}

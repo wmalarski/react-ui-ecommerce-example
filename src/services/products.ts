@@ -1,9 +1,9 @@
 import { calculateSkip } from "@/services/calculate-skip";
 import { jsonFetcher } from "./fetcher";
-import { Product, Products } from "./types";
+import type { Product, Products } from "./types";
 
 export const PRODUCTS_DEFAULT_LIMIT = 10;
-const FIRST_PAGE = 1;
+export const PRODUCTS_FIRST_PAGE = 1;
 
 type GetProductsArgs = {
   limit?: number;
@@ -12,7 +12,7 @@ type GetProductsArgs = {
 
 export const getProducts = async ({
   limit = PRODUCTS_DEFAULT_LIMIT,
-  page = FIRST_PAGE,
+  page = PRODUCTS_FIRST_PAGE,
 }: GetProductsArgs) => {
   return jsonFetcher<Products>({
     path: "/products",
@@ -28,7 +28,7 @@ type GetProductsWithQueryArgs = {
 
 export const getProductsWithQuery = async ({
   limit = PRODUCTS_DEFAULT_LIMIT,
-  page = FIRST_PAGE,
+  page = PRODUCTS_FIRST_PAGE,
   query,
 }: GetProductsWithQueryArgs) => {
   return jsonFetcher<Products>({

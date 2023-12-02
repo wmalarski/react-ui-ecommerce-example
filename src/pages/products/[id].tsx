@@ -1,7 +1,7 @@
 import { paths } from "@/helpers/paths";
 import { ProductDetails } from "@/modules/ProductDetails/ProductDetails";
 import { getProduct } from "@/services/products";
-import { GetServerSideProps } from "next";
+import type { GetServerSideProps } from "next";
 import Link from "next/link";
 import {
   Output,
@@ -44,7 +44,9 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (
 export default function ProductPage({ product }: ProductPageProps) {
   if (!product) {
     return (
-      <div>Oops! It looks like we had some trouble rendering this data.</div>
+      <main>
+        <div>Oops! It looks like we had some trouble rendering this data.</div>
+      </main>
     );
   }
 

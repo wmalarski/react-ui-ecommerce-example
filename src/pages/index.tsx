@@ -1,6 +1,10 @@
 import { ProductsGrid } from "@/modules/ProductsGrid/ProductsGrid";
-import { getProducts, getProductsWithQuery } from "@/services/products";
-import { GetServerSideProps } from "next";
+import {
+  PRODUCTS_FIRST_PAGE,
+  getProducts,
+  getProductsWithQuery,
+} from "@/services/products";
+import type { GetServerSideProps } from "next";
 import {
   Output,
   coerce,
@@ -13,7 +17,7 @@ import {
 
 const getQuerySchema = () => {
   return object({
-    page: optional(coerce(number(), Number), 1),
+    page: optional(coerce(number(), Number), PRODUCTS_FIRST_PAGE),
     query: optional(string(), ""),
   });
 };
@@ -53,7 +57,7 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 export default function Page({ data, page, query }: PageProps) {
   return (
     <main>
-      <ProductsGrid data={data} page={page} initialQuery={query} />
+      <ProductsGrid data={data} page={page} query={query} />
     </main>
   );
 }
