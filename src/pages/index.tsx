@@ -51,5 +51,9 @@ export const getServerSideProps: GetServerSideProps<PageProps> = async (
 };
 
 export default function Page({ data, page, query }: PageProps) {
-  return <Home data={data} page={page} query={query} />;
+  return (
+    <main>
+      <Home data={data} page={page} query={query} />
+    </main>
+  );
 }

@@ -1,26 +1,40 @@
 import { useThrottle } from "@/helpers/use-throttle";
-import { useState, type ChangeEvent } from "react";
+import type { FormEvent } from "react";
 
 const THROTTLE_TIME = 500;
+const SEARCH_FIELD_NAME = "query";
+
+const getQueryValue = (form: HTMLFormElement) => {
+  const formData = new FormData(form);
+  return (formData.get(SEARCH_FIELD_NAME) as string) || "";
+};
 
 type TypeAheadProps = {
   initialQuery?: string;
   onQueryChange: (query: string) => void;
 };
 
-export default function TypeAhead({
-  initialQuery,
-  onQueryChange,
-}: TypeAheadProps) {
-  const [value, setValue] = useState(initialQuery);
-
+export const TypeAhead = ({ initialQuery, onQueryChange }: TypeAheadProps) => {
   const throttledOnChange = useThrottle(onQueryChange, THROTTLE_TIME);
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setValue(value);
-    throttledOnChange(value);
+  const onChange = (event: FormEvent<HTMLFormElement>) => {
+    throttledOnChange(getQueryValue(event.currentTarget));
   };
 
-  return <input value={value} onChange={onChange} />;
-}
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    onQueryChange(getQueryValue(event.currentTarget));
+  };
+
+  return (
+    <form onChange={onChange} onSubmit={onSubmit}>
+      <label>
+        Search
+        <input
+          defaultValue={initialQuery}
+          name={SEARCH_FIELD_NAME}
+          type="search"
+        />
+      </label>
+    </form>
+  );
+};

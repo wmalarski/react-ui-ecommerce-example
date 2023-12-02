@@ -38,7 +38,7 @@ export const getProductsWithQuery = async ({
 };
 
 type GetProduct = {
-  id: string;
+  id: number;
 };
 
 export const getProduct = async ({ id }: GetProduct) => {

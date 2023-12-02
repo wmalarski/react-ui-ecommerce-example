@@ -1,9 +1,11 @@
-import Pagination from "@/components/Pagination/Pagination";
-import TypeAhead from "@/components/TypeAhead/TypeAhead";
+import { Pagination } from "@/components/Pagination/Pagination";
+import { TypeAhead } from "@/components/TypeAhead/TypeAhead";
 import { getPaginationControls } from "@/helpers";
+import { paths } from "@/helpers/paths";
 import { PRODUCTS_DEFAULT_LIMIT } from "@/services/products";
 import { Product, Products } from "@/services/types";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./Home.module.css";
 
@@ -13,7 +15,10 @@ type ProductGridItemProps = {
 
 const ProductGridItem = ({ product }: ProductGridItemProps) => {
   return (
-    <a href={`/products/${product.id}`} className={styles.CardComponent}>
+    <Link
+      href={paths.productDetails(product.id)}
+      className={styles.CardComponent}
+    >
       <div className={styles.cardImage}>
         <Image
           src={product.thumbnail}
@@ -22,10 +27,9 @@ const ProductGridItem = ({ product }: ProductGridItemProps) => {
           fill
         />
       </div>
-
-      <h5>{product.title}</h5>
+      <h2>{product.title}</h2>
       <p>{product.description}</p>
-    </a>
+    </Link>
   );
 };
 
@@ -44,26 +48,30 @@ export const Home = ({ data, page, query }: HomeProps) => {
     data.total,
   );
 
-  const onQueryChange = async (value: string) => {
-    router.replace({ query: { query: value } });
+  const onQueryChange = async (query: string) => {
+    if (query.length > 0) {
+      router.replace(paths.home({ query }));
+      return;
+    }
+    router.replace(paths.home({}));
   };
 
   return (
-    <main>
-      <section style={{ display: "flex", flexFlow: "column wrap" }}>
-        <div>
-          <h1>Shop Products</h1>
-        </div>
-        <div className={styles.wrapper_Container}>
-          <TypeAhead initialQuery={query} onQueryChange={onQueryChange} />
-        </div>
-        <div style={{ margin: "5rem 0" }} className={styles.productList}>
-          {data &&
-            data.products.length > 0 &&
-            data.products.map((data) => (
-              <ProductGridItem product={data} key={data.id} />
-            ))}
-        </div>
+    <section style={{ display: "flex", flexFlow: "column wrap" }}>
+      <header>
+        <h1>Shop Products</h1>
+      </header>
+      <div className={styles.wrapper_Container}>
+        <TypeAhead initialQuery={query} onQueryChange={onQueryChange} />
+      </div>
+      <div style={{ margin: "5rem 0" }} className={styles.productList}>
+        {data &&
+          data.products.length > 0 &&
+          data.products.map((data) => (
+            <ProductGridItem product={data} key={data.id} />
+          ))}
+      </div>
+      <footer>
         {pagination && (
           <Pagination
             page={page}
@@ -72,7 +80,7 @@ export const Home = ({ data, page, query }: HomeProps) => {
             recordEnd={pagination.pageEnd}
           />
         )}
-      </section>
-    </main>
+      </footer>
+    </section>
   );
 };

@@ -1,6 +1,6 @@
-import styles from "./Pagination.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import styles from "./Pagination.module.css";
 
 type PaginationProps = {
   page: number;
@@ -9,40 +9,29 @@ type PaginationProps = {
   recordEnd: number;
 };
 
-export default function Pagination({
+export const Pagination = ({
   page,
   recordTotal,
   recordStart,
   recordEnd,
-}: PaginationProps) {
-  const { query, pathname, basePath, asPath } = useRouter();
-  const path = asPath.split("?")[0];
-
-  const getNextPageUrl = () => {
-    const newQueryParams = { ...query, page: (page + 1).toString() };
-    const params = new URLSearchParams(newQueryParams);
-
-    return `${path}?${params.toString()}`;
-  };
-
-  const getPreviousPageUrl = () => {
-    const newQueryParams = { ...query, page: (page - 1).toString() };
-    const params = new URLSearchParams(newQueryParams);
-
-    return `${path}?${params.toString()}`;
-  };
+}: PaginationProps) => {
+  const { query } = useRouter();
 
   return (
     <div className={styles.pagination}>
       <div className={styles.nav}>
         {page > 1 && (
           <div className={styles.prev}>
-            <Link href={getPreviousPageUrl()}>&laquo; Previous Page</Link>
+            <Link href={{ query: { ...query, page: page - 1 } }}>
+              &laquo; Previous Page
+            </Link>
           </div>
         )}
         {recordTotal > recordEnd && (
           <div>
-            <Link href={getNextPageUrl()}>Next Page &raquo;</Link>
+            <Link href={{ query: { ...query, page: page + 1 } }}>
+              Next Page &raquo;
+            </Link>
           </div>
         )}
       </div>
@@ -51,4 +40,4 @@ export default function Pagination({
       </div>
     </div>
   );
-}
+};

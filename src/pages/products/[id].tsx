@@ -1,11 +1,21 @@
+import { paths } from "@/helpers/paths";
 import { ProductDetails } from "@/modules/ProductDetails/ProductDetails";
 import { getProduct } from "@/services/products";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { Output, object, safeParseAsync, string } from "valibot";
+import {
+  Output,
+  coerce,
+  integer,
+  minValue,
+  number,
+  object,
+  safeParseAsync,
+} from "valibot";
 
 const getParamsSchema = () => {
-  return object({ id: string() });
+  return object({ id: coerce(number([integer(), minValue(0)]), Number) });
 };
 
 const getProps = async ({ id }: Output<ReturnType<typeof getParamsSchema>>) => {
@@ -41,15 +51,11 @@ export default function ProductPage({ product }: ProductPageProps) {
     );
   }
 
-  const onBackClick = () => {
-    router.back();
-  };
-
   return (
     <div>
-      <a onClick={onBackClick}>
+      <Link href={paths.home({})}>
         <span>Go Back</span>
-      </a>
+      </Link>
       <ProductDetails product={product} />;
     </div>
   );
