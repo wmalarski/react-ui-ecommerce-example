@@ -1,17 +1,17 @@
 .card {
   display: flex;
-  gap: 3rem;
-  margin-top: 10rem;
+  gap: var(--space-12);
+  margin-top: var(--space-40);
   align-items: center;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 0.5rem;
-  padding: 5rem;
+  box-shadow: var(--box-shadow-xl);
+  border-radius: var(--rounded-lg);
+  padding: var(--space-20);
 }
 
 .image {
   position: relative;
-  width: 25rem;
-  height: 25rem;
+  width: var(--space-100);
+  height: var(--space-100);
   flex: 1;
 }
 

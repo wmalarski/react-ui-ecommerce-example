@@ -4,6 +4,27 @@
   box-sizing: border-box;
 }
 
+:root {
+  --colors-white: #fff;
+  --box-shadow-xl: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+  --rounded-lg: 0.5rem;
+
+  --space-4: 1rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-20: 5rem;
+  --space-40: 10rem;
+  --space-80: 20rem;
+  --space-100: 25rem;
+
+  --font-size-lg: 1.1rem;
+  --font-size-2xl: 1.5rem;
+
+  --font-weight-bold: 700;
+}
+
+
 .container {
   max-width: 1280px;
   margin: 0 auto;

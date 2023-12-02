@@ -2,8 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
-  padding: 1rem;
+  margin-top: var(--space-8);
+  padding: var(--space-2);
 }
 
 .nav {
@@ -12,12 +12,12 @@
 }
 
 .nav > div:first-child {
-  margin-right: 2rem;
+  margin-right: var(--space-8);
 }
 
 .nav div a {
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
 }
 
 @media (max-width: 549px) {
@@ -28,6 +28,6 @@
   }
 
   .info {
-    margin-bottom: 1rem;
+    margin-bottom: var(--space-4);
   }
 }

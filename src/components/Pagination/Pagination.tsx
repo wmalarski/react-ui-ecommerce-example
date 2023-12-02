@@ -20,20 +20,20 @@ export const Pagination = ({
   return (
     <div className={styles.pagination}>
       <div className={styles.nav}>
-        {page > 1 && (
+        {page > 1 ? (
           <div className={styles.prev}>
             <Link href={{ query: { ...query, page: page - 1 } }}>
               &laquo; Previous Page
             </Link>
           </div>
-        )}
-        {recordTotal > recordEnd && (
+        ) : null}
+        {recordTotal > recordEnd ? (
           <div>
             <Link href={{ query: { ...query, page: page + 1 } }}>
               Next Page &raquo;
             </Link>
           </div>
-        )}
+        ) : null}
       </div>
       <div className={styles.info}>
         Showing {recordStart}-{recordEnd} of {recordTotal}

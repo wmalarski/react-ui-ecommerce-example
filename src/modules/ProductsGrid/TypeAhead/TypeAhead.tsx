@@ -22,6 +22,7 @@ export const TypeAhead = ({ initialQuery, onQueryChange }: TypeAheadProps) => {
   };
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     onQueryChange(getQueryValue(event.currentTarget));
   };
 

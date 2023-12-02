@@ -1,6 +1,6 @@
 .root {
-  display: "flex";
-  flex-flow: "column wrap";
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .wrapperContainer {
@@ -8,15 +8,15 @@
 }
 
 .cardComponent {
-  background-color: #fff;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 0.5rem;
+  background-color: var(--colors-white);
+  box-shadow: var(--box-shadow-xl);
+  border-radius: var(--rounded-lg);
   transition: all 250ms ease-in-out;
   cursor: pointer;
-  padding: 2rem;
+  padding: var(--space-8);
   float: left;
-  max-width: calc(33.33% - 2rem);
-  margin: 1rem;
+  max-width: calc(33.33% - var(--space-8));
+  margin: var(--space-4);
 }
 
 .cardComponent:nth-child(3n + 1) {
@@ -29,8 +29,8 @@
 
 .cardImage {
   position: relative;
-  width: 20rem;
-  height: 20rem;
+  width: var(--space-80);
+  height: var(--space-80);
   margin: 0 auto;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .productList {
-  margin: "5rem 0";
+  margin: var(--space-20) 0;
 }
 
 @media (max-width: 767px) {

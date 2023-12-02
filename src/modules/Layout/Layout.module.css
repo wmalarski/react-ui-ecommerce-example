@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0;
+  padding: var(--space-8) 0;
 }
 
 .logo {
   flex: 1;
-  font-weight: 700;
-  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
 }

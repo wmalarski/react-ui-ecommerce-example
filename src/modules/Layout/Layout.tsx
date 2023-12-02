@@ -15,7 +15,7 @@ export const Layout = ({ children }: LayoutProps) => {
     <div className={`${inter.className} container`}>
       <nav className={styles.nav}>
         <Link href={paths.home()}>
-          <span className={styles.logo}>Products.com</span>
+          <h1 className={styles.logo}>Products.com</h1>
         </Link>
       </nav>
       {children}

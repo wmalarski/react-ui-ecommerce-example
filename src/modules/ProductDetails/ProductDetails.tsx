@@ -1,4 +1,4 @@
-import { formatPrice } from "@/helpers/format";
+import { formatPrice } from "@/components/utils/format";
 import { Product } from "@/services/types";
 import Image from "next/image";
 import styles from "./ProductDetails.module.css";
@@ -14,7 +14,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         <Image src={product.thumbnail} alt={product.description} fill />
       </div>
       <div className={styles.detail}>
-        <h1>{product.title}</h1>
+        <h2>{product.title}</h2>
         <p>{product.description}</p>
         <strong>{formatPrice(product.price)}</strong>
       </div>
