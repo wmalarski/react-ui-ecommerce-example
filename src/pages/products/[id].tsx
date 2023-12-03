@@ -1,8 +1,7 @@
-import { paths } from "@/helpers/paths";
-import { ProductDetails } from "@/modules/ProductDetails/ProductDetails";
+import { ProductDetails } from "@/modules/ProductDetails";
 import { getProduct } from "@/services/products";
 import type { GetServerSideProps } from "next";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   Output,
   coerce,
@@ -41,6 +40,20 @@ export const getServerSideProps: GetServerSideProps<ProductPageProps> = async (
   }
 };
 
+const BackButton = () => {
+  const router = useRouter();
+
+  const onBackClick = () => {
+    router.back();
+  };
+
+  return (
+    <button onClick={onBackClick}>
+      <span>Go Back</span>
+    </button>
+  );
+};
+
 export default function ProductPage({ product }: ProductPageProps) {
   if (!product) {
     return (
@@ -52,10 +65,8 @@ export default function ProductPage({ product }: ProductPageProps) {
 
   return (
     <main>
-      <Link href={paths.home()}>
-        <span>Go Back</span>
-      </Link>
-      <ProductDetails product={product} />;
+      <BackButton />
+      <ProductDetails product={product} />
     </main>
   );
 }

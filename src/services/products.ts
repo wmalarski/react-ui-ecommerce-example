@@ -10,7 +10,7 @@ type GetProductsArgs = {
   page?: number;
 };
 
-export const getProducts = async ({
+export const getProducts = ({
   limit = PRODUCTS_DEFAULT_LIMIT,
   page = PRODUCTS_FIRST_PAGE,
 }: GetProductsArgs) => {
@@ -26,7 +26,7 @@ type GetProductsWithQueryArgs = {
   query: string;
 };
 
-export const getProductsWithQuery = async ({
+export const getProductsWithQuery = ({
   limit = PRODUCTS_DEFAULT_LIMIT,
   page = PRODUCTS_FIRST_PAGE,
   query,
@@ -41,7 +41,7 @@ type GetProduct = {
   id: number;
 };
 
-export const getProduct = async ({ id }: GetProduct) => {
+export const getProduct = ({ id }: GetProduct) => {
   return jsonFetcher<Product>({
     path: `/products/${id}`,
   });

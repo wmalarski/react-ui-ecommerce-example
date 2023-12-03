@@ -1,4 +1,4 @@
-import { ProductsGrid } from "@/modules/ProductsGrid/ProductsGrid";
+import { ProductsGrid } from "@/modules/ProductsGrid";
 import {
   PRODUCTS_FIRST_PAGE,
   getProducts,
