@@ -19,6 +19,10 @@ export function TypeAhead({ defaultValue }: TypeAheadProps) {
   const router = useRouter();
 
   const onQueryChange = (query: string) => {
+    if (router.query.query === query) {
+      return;
+    }
+
     router.replace(paths.home(query.length > 0 ? { query } : {}));
   };
 
